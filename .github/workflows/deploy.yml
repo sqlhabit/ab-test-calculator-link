@@ -40,8 +40,6 @@ jobs:
 
       - name: Run tests
         uses: cypress-io/github-action@v6
-        env:
-          NODE_ENV: production
         with:
           start: npm run preview
           wait-on: 'http://localhost:5173'
