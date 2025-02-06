@@ -1,6 +1,6 @@
 describe('Home Page', () => {
   beforeEach(() => {
-    const baseUrl = Cypress.env('CYPRESS_BASE_URL') || ''
+    const baseUrl = process.env.CYPRESS_BASE_URL || ''
     const url = `${baseUrl}/?cs=1000&cc=24&vs=1000&vc=54`
 
     cy.task("log", `--> Visiting URL: ${url}`)
