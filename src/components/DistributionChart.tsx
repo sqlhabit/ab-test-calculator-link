@@ -24,12 +24,19 @@ export const DistributionChart: React.FC = () => {
   const controlRate = (controlConversions / controlSize) * 100;
   const variantRate = (variantConversions / variantSize) * 100;
 
+  // Calculate standard errors for both groups
+  const controlSE = Math.sqrt((controlConversions / controlSize) * (1 - controlConversions / controlSize) / controlSize) * 100;
+  const variantSE = Math.sqrt((variantConversions / variantSize) * (1 - variantConversions / variantSize) / variantSize) * 100;
+
   // Calculate the range to show on x-axis
-  const minRate = Math.min(controlRate, variantRate);
-  const maxRate = Math.max(controlRate, variantRate);
-  const range = maxRate - minRate;
-  const xMin = Math.max(0, minRate - range);
-  const xMax = maxRate + range;
+  const xMin = Math.max(0, Math.min(
+    controlRate - 5 * controlSE,
+    variantRate - 5 * variantSE
+  ));
+  const xMax = Math.max(
+    controlRate + 5 * controlSE,
+    variantRate + 5 * variantSE
+  );
 
   // Generate separate distributions for control and variant
   const points = 100;
