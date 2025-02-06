@@ -35,14 +35,25 @@ export const DistributionChart: React.FC = () => {
       <h2 className="text-xl font-semibold mb-4">Conversion Rate Distribution</h2>
       <div className="h-[400px]">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={combinedData}>
+          <LineChart
+            data={combinedData}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis
               dataKey="x"
+              domain={[0, 'auto']}
+              tickFormatter={(value) => `${value.toFixed(1)}%`}
               label={{ value: 'Conversion Rate (%)', position: 'bottom' }}
             />
-            <YAxis label={{ value: 'Density', angle: -90, position: 'insideLeft' }} />
-            <Tooltip />
+            <YAxis
+              label={{ value: 'Density', angle: -90, position: 'insideLeft' }}
+              tickFormatter={(value) => value.toFixed(3)}
+            />
+            <Tooltip
+              formatter={(value: number) => value.toFixed(4)}
+              labelFormatter={(label) => `${Number(label).toFixed(1)}%`}
+            />
             <Legend />
             <Line
               type="monotone"
@@ -50,6 +61,7 @@ export const DistributionChart: React.FC = () => {
               stroke="#2563eb"
               name="Control"
               dot={false}
+              strokeWidth={2}
             />
             <Line
               type="monotone"
@@ -57,6 +69,7 @@ export const DistributionChart: React.FC = () => {
               stroke="#dc2626"
               name="Variant"
               dot={false}
+              strokeWidth={2}
             />
           </LineChart>
         </ResponsiveContainer>

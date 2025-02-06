@@ -46,18 +46,24 @@ export function generateDistributionData(
   conversions: number,
   points: number = 100
 ): Array<{ x: number; y: number }> {
+  if (size === 0 || conversions === 0) {
+    return Array(points).fill({ x: 0, y: 0 });
+  }
+
   const rate = conversions / size;
   const standardError = Math.sqrt((rate * (1 - rate)) / size);
 
   const data: Array<{ x: number; y: number }> = [];
+  // Ensure we start from 0 if the distribution allows it
   const start = Math.max(0, rate - 4 * standardError);
   const end = Math.min(1, rate + 4 * standardError);
-  const step = (end - start) / points;
+  const step = (end - start) / (points - 1);
 
-  for (let x = start; x <= end; x += step) {
+  for (let i = 0; i < points; i++) {
+    const x = start + (i * step);
     const y = (1 / (standardError * Math.sqrt(2 * Math.PI))) *
       Math.exp(-0.5 * Math.pow((x - rate) / standardError, 2));
-    data.push({ x: x * 100, y });
+    data.push({ x: x * 100, y }); // Convert to percentage
   }
 
   return data;
