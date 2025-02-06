@@ -1,7 +1,7 @@
 describe('Home Page', () => {
   beforeEach(() => {
     const baseUrl = 'http://localhost:5173/ab-test-calculator-link/'
-    const url = `${baseUrl}?cs=1000&cc=24&vs=1000&vc=54`
+    const url = `${baseUrl}#/?cs=1000&cc=24&vs=1000&vc=54`
 
     cy.task("log", `--> Visiting URL: ${url}`)
 
