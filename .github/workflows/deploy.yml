@@ -44,7 +44,8 @@ jobs:
           start: npm run preview
           wait-on: 'http://localhost:5173'
           browser: chrome
-          config: baseUrl=http://localhost:5173/ab-test-calculator-link/
+          env:
+            CYPRESS_BASE_URL: http://localhost:5173/ab-test-calculator-link/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
