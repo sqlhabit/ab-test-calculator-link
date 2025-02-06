@@ -1,6 +1,5 @@
 import React from 'react';
 import { useABTestStore } from '../stores/abTestStore';
-import { generateDistributionData } from '../utils/statistics';
 import {
   LineChart,
   Line,
