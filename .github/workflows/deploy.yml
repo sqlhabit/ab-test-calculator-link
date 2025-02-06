@@ -45,7 +45,7 @@ jobs:
           config: baseUrl=http://localhost:5173
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./dist
 
