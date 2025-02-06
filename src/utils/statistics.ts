@@ -54,15 +54,20 @@ export function generateDistributionData(
   const standardError = Math.sqrt((rate * (1 - rate)) / size);
 
   const data: Array<{ x: number; y: number }> = [];
-  // Ensure we start from 0 if the distribution allows it
-  const start = Math.max(0, rate - 4 * standardError);
-  const end = Math.min(1, rate + 4 * standardError);
+  // Calculate range ensuring the mean (rate) is at the center
+  const range = 4 * standardError;
+  const start = Math.max(0, rate - range);
+  const end = Math.min(1, rate + range);
+
+  // Adjust step size to maintain symmetry
   const step = (end - start) / (points - 1);
 
   for (let i = 0; i < points; i++) {
     const x = start + (i * step);
+    // Normal distribution formula
+    const z = (x - rate) / standardError;
     const y = (1 / (standardError * Math.sqrt(2 * Math.PI))) *
-      Math.exp(-0.5 * Math.pow((x - rate) / standardError, 2));
+      Math.exp(-0.5 * z * z);
     data.push({ x: x * 100, y }); // Convert to percentage
   }
 

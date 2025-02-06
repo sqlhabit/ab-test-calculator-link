@@ -20,15 +20,28 @@ export const DistributionChart: React.FC = () => {
     variantConversions,
   } = useABTestStore();
 
-  const controlData = generateDistributionData(controlSize, controlConversions);
-  const variantData = generateDistributionData(variantSize, variantConversions);
+  // Calculate conversion rates
+  const controlRate = (controlConversions / controlSize) * 100;
+  const variantRate = (variantConversions / variantSize) * 100;
 
-  // Combine data for proper scaling
-  const combinedData = controlData.map((point, index) => ({
-    x: point.x,
-    control: point.y,
-    variant: variantData[index].y,
-  }));
+  // Calculate the range to show on x-axis
+  const minRate = Math.min(controlRate, variantRate);
+  const maxRate = Math.max(controlRate, variantRate);
+  const range = maxRate - minRate;
+  const xMin = Math.max(0, minRate - range);
+  const xMax = maxRate + range;
+
+  // Generate separate distributions for control and variant
+  const points = 100;
+  const step = (xMax - xMin) / (points - 1);
+  const data = Array.from({ length: points }, (_, i) => {
+    const x = xMin + i * step;
+    return {
+      x,
+      control: controlSize > 0 ? normalDensity(x, controlRate, controlSize, controlConversions) : 0,
+      variant: variantSize > 0 ? normalDensity(x, variantRate, variantSize, variantConversions) : 0,
+    };
+  });
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm">
@@ -36,7 +49,7 @@ export const DistributionChart: React.FC = () => {
       <div className="h-[400px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
-            data={combinedData}
+            data={data}
             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
@@ -77,3 +90,11 @@ export const DistributionChart: React.FC = () => {
     </div>
   );
 };
+
+// Helper function to calculate normal distribution density
+function normalDensity(x: number, mean: number, size: number, conversions: number): number {
+  const rate = conversions / size;
+  const standardError = Math.sqrt((rate * (1 - rate)) / size);
+  const z = (x - mean) / (standardError * 100); // Adjust for percentage scale
+  return (1 / (standardError * 100 * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * z * z);
+}
