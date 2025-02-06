@@ -57,7 +57,7 @@ export const DistributionChart: React.FC = () => {
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={data}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            margin={{ top: 5, right: 30, left: 20, bottom: 25 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis
@@ -74,7 +74,13 @@ export const DistributionChart: React.FC = () => {
               formatter={(value: number) => value.toFixed(4)}
               labelFormatter={(label) => `${Number(label).toFixed(1)}%`}
             />
-            <Legend />
+            <Legend
+              verticalAlign="bottom"
+              align="left"
+              wrapperStyle={{
+                paddingTop: '10px'
+              }}
+            />
             <Line
               type="monotone"
               dataKey="control"
