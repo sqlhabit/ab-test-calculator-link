@@ -45,9 +45,7 @@ jobs:
           wait-on: 'http://localhost:5173'
           browser: chrome
           config: baseUrl=http://localhost:5173/ab-test-calculator-link/
-        env:
-          CYPRESS_BASE_URL: http://localhost:5173/ab-test-calculator-link/
-          DEBUG: "cypress:*"
+          env: CYPRESS_BASE_URL=http://localhost:5173/ab-test-calculator-link/,DEBUG=cypress:*
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
