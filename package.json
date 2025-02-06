@@ -10,6 +10,8 @@
     "preview": "vite preview",
     "test": "cypress run",
     "test:open": "cypress open",
+    "test:e2e": "cypress run --e2e",
+    "test:e2e:open": "cypress open --e2e",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "type-check": "tsc --noEmit"
   },
