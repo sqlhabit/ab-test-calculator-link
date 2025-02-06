@@ -1,7 +1,11 @@
 describe('Home Page', () => {
   beforeEach(() => {
     const baseUrl = Cypress.env('CYPRESS_BASE_URL') || ''
-    cy.visit(`${baseUrl}/?cs=1000&cc=24&vs=1000&vc=54`)
+    const url = `${baseUrl}/?cs=1000&cc=24&vs=1000&vc=54`
+
+    cy.task("log", `--> Visiting URL: ${url}`)
+
+    cy.visit(url)
   })
 
   it('displays the correct heading', () => {
