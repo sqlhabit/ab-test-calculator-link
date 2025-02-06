@@ -12,7 +12,7 @@ Meet the first AB-test calculator that could be integrated into your BI dashboar
 
 ## Example URL
 
-`https://sqlhabit.github.io/ab-test-calculator-link/#/?cs=1000&cc=24&vs=1000&vc=54`
+:link: [https://sqlhabit.github.io/ab-test-calculator-link/#/?cs=1000&cc=24&vs=1000&vc=54](https://sqlhabit.github.io/ab-test-calculator-link/#/?cs=1000&cc=24&vs=1000&vc=54)
 
 ### URL Parameters
 
